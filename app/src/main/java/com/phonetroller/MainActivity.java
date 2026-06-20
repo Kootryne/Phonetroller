@@ -70,7 +70,6 @@ public class MainActivity extends Activity {
         private final SharedPreferences prefs;
         private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         private final Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        private final RectF temp = new RectF();
         private final List<ControllerProfile> controllers = new ArrayList<>();
         private final List<UiButton> uiButtons = new ArrayList<>();
 
@@ -539,7 +538,10 @@ public class MainActivity extends Activity {
                 addControl(TYPE_SLIDER);
             } else if ("rename_control".equals(action)) {
                 Control c = selectedControl();
-                if (c == null) return toastSelect();
+                if (c == null) {
+                    toastSelect();
+                    return;
+                }
                 promptText("Control label", c.label, text -> {
                     c.label = clean(text, c.label);
                     saveControllers();
